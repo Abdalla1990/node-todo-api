@@ -6,10 +6,9 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
     }
     console.log('Connected to MongoDB server');
 
-    db.collection('Users').insertOne({
-        name: 'Andrew',
-        age: 25,
-        location: 'Philadelphia'
+    db.collection('Todos').insertOne({
+        text: 'eat dinner',
+        completed: false
     }, (err, result) => {
         if (err) {
             return console.log('Unable to insert user', err);
@@ -18,10 +17,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
         console.log(result.ops);
     });
 
-    db.collection('Users').find({ name: 'abdalla ahmed' }).toArray().then((docs) => {
 
-        console.log(JSON.stringify(docs, undefined, 2));
-    });
 
     db.close();
 });
