@@ -25,10 +25,17 @@ app.post('/todos', (req, res) => {
 
 
 
-})
+});
 
+app.get('/todos', (req, res) => {
+    Todo.find()
+        .then((todosList) => { res.send(JSON.stringify({ todosList })) }, (err) => { res.status(400).send(JSON.stringify(err)) })
+})
 
 
 app.listen(3000, () => {
     console.log('started at 3000 .')
 });
+
+
+module.exports = { app };
