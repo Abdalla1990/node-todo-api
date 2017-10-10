@@ -79,6 +79,35 @@ app.patch('/todos/update/:id', (req, res) => {
     }).catch((err) => { res.status(404).send(); });
 });
 
+//===================== user routes ==========================//
+
+
+
+app.post('/users/create-user', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+    var user = new User(body);
+    user.save().then(() => { // this call back with a promise for the authentication function 
+        // function defined in the User Modle 
+        return user.generateAuthToken();
+
+    }).then((token) => {
+        res.header('x-auth', token).send(user);
+    }).catch((err) => {
+        res.status(400).send(err);
+    })
+
+
+
+});
+
+
+
+
+
+
+
+
+
 
 app.listen(port, () => {
     console.log(`started up at port :${port}`)
