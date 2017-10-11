@@ -1,13 +1,19 @@
 var { Mongoose } = require('./db/mongoose.js');
-var { Todo } = require('./modules/todos');
-var { User } = require('./modules/users');
+var { Todo } = require('./models/todos');
+var { User } = require('./models/users');
 var express = require('express');
 var bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const _ = require('lodash');
 var app = express();
+var { authenticate } = require('./middleware/authentication');
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
+
+
+// =========todos routes================
+
+
 app.post('/todos', (req, res) => {
 
     var todo = new Todo({
@@ -97,7 +103,13 @@ app.post('/users/create-user', (req, res) => {
     })
 
 
+});
 
+
+// with authentication middleware 
+app.get('/users/me', authenticate, (req, res) => {
+
+    res.send(req.user);
 });
 
 
