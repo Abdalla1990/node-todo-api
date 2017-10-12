@@ -7,6 +7,7 @@ const { ObjectID } = require('mongodb');
 const _ = require('lodash');
 var app = express();
 var { authenticate } = require('./middleware/authentication');
+
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
@@ -92,8 +93,10 @@ app.patch('/todos/update/:id', (req, res) => {
 app.post('/users/create-user', (req, res) => {
     var body = _.pick(req.body, ['email', 'password']);
     var user = new User(body);
+
     user.save().then(() => { // this call back with a promise for the authentication function 
         // function defined in the User Modle 
+
         return user.generateAuthToken();
 
     }).then((token) => {
