@@ -87,10 +87,24 @@ app.patch('/todos/update/:id', (req, res) => {
 });
 
 //===================== user routes ==========================//
+app.post('/users/login', (req, res) => {
+    console.log('inside the function');
+    var body = _.pick(req.body, ['email', 'password']);
+    console.log(req.body.email);
+    console.log(req.body.password);
 
+
+    User.findByCredentials(body.email, body.password).then((User) => {
+        res.status(200).send(User);
+    }).catch((err) => {
+        res.status(400).send(err)
+    });
+
+});
 
 
 app.post('/users/create-user', (req, res) => {
+    console.log('inside the function');
     var body = _.pick(req.body, ['email', 'password']);
     var user = new User(body);
 
@@ -111,21 +125,22 @@ app.post('/users/create-user', (req, res) => {
 
 // with authentication middleware 
 app.get('/users/me', authenticate, (req, res) => {
-
+    console.log('inside the function');
     res.send(req.user);
 });
 
-app.post('users/login', (req, res) => {
-
-    var body = _.pick(req.body, ['email', 'password']);
-    console.log(body.email);
-    User.findByCredentials(body.email, body.password).then((user) => {
+app.get('/users/:id', (req, res) => {
+    console.log('inside the function');
+    var id = req.params.id;
+    User.findById(id).then((user) => {
         res.status(200).send(user);
     }).catch((err) => {
-        res.status(400).send(err)
-    });
-
+        res.status(400).send('there is an error ', err);
+    })
 });
+
+
+
 
 
 

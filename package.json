@@ -1,7 +1,7 @@
 {
-    "name": "node-todo-api",
+    "name": "todo-api",
     "version": "1.0.0",
-    "description": "",
+    "description": "a simple API hosted on heroku",
     "main": "index.js",
     "scripts": {
         "start": "node ./server/server.js",
@@ -29,5 +29,13 @@
         "mocha": "^3.0.2",
         "nodemon": "^1.12.1",
         "supertest": "^2.0.0"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Abdalla1990/node-todo-api.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Abdalla1990/node-todo-api/issues"
+    },
+    "homepage": "https://github.com/Abdalla1990/node-todo-api#readme"
 }
