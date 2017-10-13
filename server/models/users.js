@@ -64,6 +64,28 @@ UserSchema.statics.findByToken = function(token) {
 };
 
 
+UserSchema.statics.findByCredentials = function(email, password) {
+
+    var User = this;
+    return User.findOne({ email }).then((user) => {
+        if (!user) {
+            return Promise.reject('user doesnt exist');
+        }
+        // since we cant call bcrypt without a callback function we simulated a callback 
+        //function by creating a new promice which returns a callback!
+        return new Promise((resolve, reject) => {
+            var encrypt =
+                result = bcryptjs.compare(password, user.password, (err, res) => {
+                    if (res) {
+                        resolve(user);
+                    } else {
+                        reject(err);
+                    }
+                });
+        });
+    });
+};
+
 
 // a middleware happening in the model level to hash the password before saving it : 
 
