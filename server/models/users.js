@@ -48,6 +48,16 @@ UserSchema.methods.generateAuthToken = function() {
         return token;
     });
 };
+
+UserSchema.methods.removeToken = function(token) {
+
+    var user = this;
+    return user.update({
+        $pull: {
+            tokens: { token }
+        }
+    })
+};
 UserSchema.statics.findByToken = function(token) {
     var User = this;
     var decoded;
@@ -74,14 +84,14 @@ UserSchema.statics.findByCredentials = function(email, password) {
         // since we cant call bcrypt without a callback function we simulated a callback 
         //function by creating a new promice which returns a callback!
         return new Promise((resolve, reject) => {
-            var encrypt =
-                result = bcryptjs.compare(password, user.password, (err, res) => {
-                    if (res) {
-                        resolve(user);
-                    } else {
-                        reject('there is an error ', err);
-                    }
-                });
+
+            result = bcryptjs.compare(password, user.password, (err, res) => {
+                if (res) {
+                    resolve(user);
+                } else {
+                    reject('there is an error ', err);
+                }
+            });
         });
     });
 };
