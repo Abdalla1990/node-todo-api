@@ -2,3 +2,5 @@ node_modules/
 results.json
 ../.vscode/
 ../server/tests/
+promiseANdArrowFunctions.js
+playground/somePractices.js
